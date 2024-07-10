@@ -21,7 +21,6 @@ function love.load()
 	table.insert(entities, Egg({ world = world, x = 60, y = -100 }))
 	table.insert(entities, Egg({ world = world, x = -30, y = -100 }))
 	table.insert(entities, Floor({ world = world }))
-	camera.target = entities[1]
 end
 
 function love.keypressed(key)

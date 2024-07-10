@@ -5,6 +5,11 @@ textures.egg = love.graphics.newImage("assets/egg/Purple.png")
 textures.background = love.graphics.newImage("assets/background.jpg")
 textures.grass = love.graphics.newImage("assets/grass/grass.png")
 
+textures.egg = {}
+for _, file in ipairs(love.filesystem.getDirectoryItems("assets/egg")) do
+	table.insert(textures.egg, love.graphics.newImage("assets/egg/" .. file))
+end
+
 local grass_names = {
 	{ "grass1", "grass2", "grass3", "grass4", "grass5" },
 	{ "grass6", "grass7", "grass8", "grass9", "grass10" },

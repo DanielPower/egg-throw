@@ -15,7 +15,8 @@ local Egg = function(opt)
 	love.physics.newFixture(egg.body, lowerBall)
 	love.physics.newFixture(egg.body, midSection)
 
-	local texture = assets.textures.egg
+	print(assets.textures.egg, math.random(#assets.textures.egg))
+	local texture = assets.textures.egg[math.random(#assets.textures.egg)]
 	local offsetX = texture:getWidth() / 2
 	local offsetY = texture:getHeight() / 2
 
