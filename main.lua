@@ -2,35 +2,23 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 
 local Camera = require("lib.camera")
 local Floor = require("lib.floor")
+local Egg = require("lib.egg")
 
 local camera
 local floor
+local egg
 
 function love.load()
+	egg = Egg()
+	egg.y = -100
 	camera = Camera()
 	floor = Floor()
-	camera.scale = 5
+	camera.scale = 4
 end
 
 function love.update(dt)
-	if love.keyboard.isDown("up") then
-		camera:move(0, -100 * dt)
-	end
-	if love.keyboard.isDown("down") then
-		camera:move(0, 100 * dt)
-	end
-	if love.keyboard.isDown("left") then
-		camera:move(-100 * dt, 0)
-	end
-	if love.keyboard.isDown("right") then
-		camera:move(100 * dt, 0)
-	end
-	if love.keyboard.isDown("-") then
-		camera.scale = camera.scale * 0.5 ^ dt
-	end
-	if love.keyboard.isDown("=") then
-		camera.scale = camera.scale * 2 ^ dt
-	end
+	camera:update(dt)
+	egg:update(dt)
 end
 
 function love.draw()
@@ -38,5 +26,6 @@ function love.draw()
 	love.graphics.clear(0.53, 0.81, 0.92)
 	camera:draw(function()
 		floor:draw(camera)
+		egg:draw()
 	end)
 end
