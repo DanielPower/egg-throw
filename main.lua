@@ -10,6 +10,7 @@ local floor
 local egg
 local world
 local entities = {}
+local pause = true
 
 function love.load()
 	love.physics.setMeter(64)
@@ -19,9 +20,19 @@ function love.load()
 	table.insert(entities, Egg({ world = world, x = 60, y = -100 }))
 	table.insert(entities, Egg({ world = world, x = -30, y = -100 }))
 	table.insert(entities, Floor({ world = world }))
+	camera.target = entities[1]
+end
+
+function love.keypressed(key)
+	if key == "p" then
+		pause = not pause
+	end
 end
 
 function love.update(dt)
+	if pause then
+		return
+	end
 	world:update(dt)
 	for _, entity in ipairs(entities) do
 		if entity.update then

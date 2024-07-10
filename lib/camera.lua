@@ -4,25 +4,30 @@ local Camera = function(opt)
 	camera.y = opt.y or 0
 	camera.scale = opt.scale or 1
 	camera.rotation = opt.rotation or 0
+	camera.target = opt.target or nil
 
 	function camera:update(dt)
-		if love.keyboard.isDown("up") then
-			self:move(0, -100 * dt)
-		end
-		if love.keyboard.isDown("down") then
-			self:move(0, 100 * dt)
-		end
-		if love.keyboard.isDown("left") then
-			self:move(-100 * dt, 0)
-		end
-		if love.keyboard.isDown("right") then
-			self:move(100 * dt, 0)
-		end
-		if love.keyboard.isDown("-") then
-			self.scale = camera.scale * 0.5 ^ dt
-		end
-		if love.keyboard.isDown("=") then
-			self.scale = camera.scale * 2 ^ dt
+		if camera.target then
+			camera:moveTo(camera.target.body:getX(), camera.target.body:getY())
+		else
+			if love.keyboard.isDown("up") then
+				self:move(0, -100 * dt)
+			end
+			if love.keyboard.isDown("down") then
+				self:move(0, 100 * dt)
+			end
+			if love.keyboard.isDown("left") then
+				self:move(-100 * dt, 0)
+			end
+			if love.keyboard.isDown("right") then
+				self:move(100 * dt, 0)
+			end
+			if love.keyboard.isDown("-") then
+				self.scale = camera.scale * 0.5 ^ dt
+			end
+			if love.keyboard.isDown("=") then
+				self.scale = camera.scale * 2 ^ dt
+			end
 		end
 	end
 
