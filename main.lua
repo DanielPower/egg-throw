@@ -10,7 +10,8 @@ local floor
 local egg
 local world
 local entities = {}
-local pause = true
+local pause = false
+local debug = false
 
 function love.load()
 	love.physics.setMeter(64)
@@ -26,6 +27,9 @@ end
 function love.keypressed(key)
 	if key == "p" then
 		pause = not pause
+	end
+	if key == "d" then
+		debug = not debug
 	end
 end
 
@@ -51,6 +55,8 @@ function love.draw()
 				entity:draw(camera)
 			end
 		end
-		-- physics.debugDraw(world)
+		if debug then
+			physics.debugDraw(world)
+		end
 	end)
 end
