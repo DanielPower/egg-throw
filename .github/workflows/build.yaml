@@ -1,3 +1,8 @@
+on:
+  push:
+    branches:
+      - master
+
 steps:
   - uses: actions/checkout@v3
   - uses: nhartland/love-build@master
