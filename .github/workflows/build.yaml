@@ -13,23 +13,10 @@ jobs:
         with:
           app_name: "egg_throw"
           love_version: "11.5"
-      - uses: actions/upload-artifact@v4
+      - uses: softprops/action-gh-release@v2
         with:
-          name: built-applications
-          path: "release"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: macos-build
-          path: ${{ steps.love-build.outputs.macos-filename }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: win32-build
-          path: ${{ steps.love-build.outputs.win32-filename }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: win64-build
-          path: ${{ steps.love-build.outputs.win64-filename }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: love-build
-          path: ${{ steps.love-build.outputs.love-filename }}
+          files:
+            - ${{ steps.love-build.outputs.macos-filename }}
+            - ${{ steps.love-build.outputs.win32-filename }}
+            - ${{ steps.love-build.outputs.win64-filename }}
+            - ${{ steps.love-build.outputs.love-filename }}
