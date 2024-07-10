@@ -66,4 +66,6 @@ function love.draw()
 			physics.debugDraw(world)
 		end
 	end)
+	love.graphics.setColor(1, 0, 0)
+	love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
 end
