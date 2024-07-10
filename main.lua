@@ -33,6 +33,13 @@ function love.keypressed(key)
 	end
 end
 
+function love.mousepressed(x, y, button)
+	if button == 1 then
+		local wx, wy = camera:toWorld(x, y)
+		table.insert(entities, Egg({ world = world, x = wx, y = wy }))
+	end
+end
+
 function love.update(dt)
 	if pause then
 		return

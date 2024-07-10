@@ -19,10 +19,6 @@ local Egg = function(opt)
 	local offsetX = texture:getWidth() / 2
 	local offsetY = texture:getHeight() / 2
 
-	function egg:update(dt)
-		self.body:applyTorque(80000 * dt)
-	end
-
 	function egg:draw()
 		love.graphics.draw(
 			texture,
