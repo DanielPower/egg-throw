@@ -1,9 +1,9 @@
-local Camera = function()
+local Camera = function(opt)
 	local camera = {}
-	camera.x = 0
-	camera.y = 0
-	camera.scale = 1
-	camera.rotation = 0
+	camera.x = opt.x or 0
+	camera.y = opt.y or 0
+	camera.scale = opt.scale or 1
+	camera.rotation = opt.rotation or 0
 
 	function camera:update(dt)
 		if love.keyboard.isDown("up") then

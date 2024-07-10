@@ -9,19 +9,25 @@ local camera
 local floor
 local egg
 local world
+local entities = {}
 
 function love.load()
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 9.81 * 64, true)
-	egg = Egg({ world = world, x = 0, y = -100 })
-	egg.y = -100
-	camera = Camera()
-	floor = Floor({ world = world })
-	camera.scale = 4
+	camera = Camera({ y = -160, scale = 2 })
+	table.insert(entities, Egg({ world = world, x = 0, y = -100 }))
+	table.insert(entities, Egg({ world = world, x = 60, y = -100 }))
+	table.insert(entities, Egg({ world = world, x = -30, y = -100 }))
+	table.insert(entities, Floor({ world = world }))
 end
 
 function love.update(dt)
 	world:update(dt)
+	for _, entity in ipairs(entities) do
+		if entity.update then
+			entity:update(dt)
+		end
+	end
 	camera:update(dt)
 end
 
@@ -29,8 +35,11 @@ function love.draw()
 	love.graphics.setColor(1, 1, 1)
 	love.graphics.clear(0.53, 0.81, 0.92)
 	camera:draw(function()
-		floor:draw(camera)
-		egg:draw()
+		for _, entity in ipairs(entities) do
+			if entity.draw then
+				entity:draw(camera)
+			end
+		end
 		-- physics.debugDraw(world)
 	end)
 end

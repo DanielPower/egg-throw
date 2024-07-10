@@ -5,7 +5,7 @@ local Egg = function(opt)
 	local egg = {}
 
 	local body = love.physics.newBody(opt.world, opt.x, opt.y, "dynamic")
-	local x1, y1, r1 = 1, -12, 16
+	local x1, y1, r1 = 0, -12, 16
 	local x2, y2, r2 = 0, 8, 24
 	local upperBall = love.physics.newCircleShape(x1, y1, r1)
 	local lowerBall = love.physics.newCircleShape(x2, y2, r2)

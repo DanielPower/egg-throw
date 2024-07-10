@@ -16,7 +16,7 @@ local function Floor(opt)
 		local viewportWidth = camera:getViewportWidth()
 		for i = math.floor(offsetX / width), math.floor((offsetX + viewportWidth) / width) do
 			love.graphics.draw(texture, grassQuad, -viewportWidth / 2 + i * width, 0)
-			for j = 1, 5 do
+			for j = 1, 50 do
 				love.graphics.draw(texture, dirtQuad, -viewportWidth / 2 + i * width, j * width)
 			end
 		end
