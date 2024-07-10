@@ -3,7 +3,7 @@ local Camera = function(opt)
 	camera.x = opt.x or 0
 	camera.y = opt.y or 0
 	camera.scale = opt.scale or 1
-	camera.rotation = opt.rotation or 0
+	camera.angle = opt.angle or 0
 	camera.target = opt.target or nil
 
 	function camera:update(dt)
@@ -35,7 +35,7 @@ local Camera = function(opt)
 		love.graphics.push()
 		love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
 		love.graphics.scale(self.scale)
-		love.graphics.rotate(self.rotation)
+		love.graphics.rotate(self.angle)
 		love.graphics.translate(-self.x, -self.y)
 		func()
 		love.graphics.pop()
@@ -49,6 +49,16 @@ local Camera = function(opt)
 	function camera:moveTo(x, y)
 		self.x = x
 		self.y = y
+	end
+
+	function camera:toWorld(x, y)
+		return (x - love.graphics.getWidth() / 2) / self.scale + self.x,
+			(y - love.graphics.getHeight() / 2) / self.scale + self.y
+	end
+
+	function camera:toScreen(x, y)
+		return (x - self.x) * self.scale + love.graphics.getWidth() / 2,
+			(y - self.y) * self.scale + love.graphics.getHeight() / 2
 	end
 
 	function camera:getViewportWidth()
