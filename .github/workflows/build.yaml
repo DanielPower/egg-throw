@@ -15,8 +15,8 @@ jobs:
           love_version: "11.5"
       - uses: softprops/action-gh-release@v2
         with:
-          files:
-            - ${{ steps.love-build.outputs.macos-filename }}
-            - ${{ steps.love-build.outputs.win32-filename }}
-            - ${{ steps.love-build.outputs.win64-filename }}
-            - ${{ steps.love-build.outputs.love-filename }}
+          files: |
+            ${{ steps.love-build.outputs.macos-filename }}
+            ${{ steps.love-build.outputs.win32-filename }}
+            ${{ steps.love-build.outputs.win64-filename }}
+            ${{ steps.love-build.outputs.love-filename }}
