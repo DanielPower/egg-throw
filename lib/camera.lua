@@ -22,12 +22,12 @@ local Camera = function(opt)
 			if love.keyboard.isDown("right") then
 				self:move(100 * dt, 0)
 			end
-			if love.keyboard.isDown("-") then
-				self.scale = camera.scale * 0.5 ^ dt
-			end
-			if love.keyboard.isDown("=") then
-				self.scale = camera.scale * 2 ^ dt
-			end
+		end
+		if love.keyboard.isDown("-") then
+			self.scale = camera.scale * 0.5 ^ dt
+		end
+		if love.keyboard.isDown("=") then
+			self.scale = camera.scale * 2 ^ dt
 		end
 	end
 
