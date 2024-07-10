@@ -4,14 +4,14 @@ on:
       - master
 
 jobs:
-  name: Build and release
-  steps:
-    - uses: actions/checkout@v3
-    - uses: nhartland/love-build@master
-      with:
-        app_name: "egg_throw"
-        love_version: "11.5"
-    - uses: actions/upload-artifact@v1
-      with:
-        name: built-applications
-        path: "release"
+  build:
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nhartland/love-build@master
+        with:
+          app_name: "egg_throw"
+          love_version: "11.5"
+      - uses: actions/upload-artifact@v1
+        with:
+          name: built-applications
+          path: "release"
