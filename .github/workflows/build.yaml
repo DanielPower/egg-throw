@@ -17,7 +17,7 @@ jobs:
         with:
           make_latest: true
           generate_release_notes: true
-          tag: build_${{ github.run_number }}
+          tag_name: build_${{ github.run_number }}
           files: |
             ${{ steps.love-build.outputs.macos-filename }}
             ${{ steps.love-build.outputs.win32-filename }}
