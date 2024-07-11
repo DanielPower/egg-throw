@@ -1,5 +1,6 @@
 local assets = require("assets")
 local geometry = require("lib.geometry")
+local physics = require("lib.physics")
 
 local FRICTION = 0.7
 local RESTITUTION = 0.5
@@ -24,10 +25,18 @@ local Egg = function(opt)
 	f2:setRestitution(RESTITUTION)
 	f3:setRestitution(RESTITUTION)
 
-	print(assets.textures.egg, math.random(#assets.textures.egg))
 	local texture = assets.textures.egg[math.random(#assets.textures.egg)]
 	local offsetX = texture:getWidth() / 2
 	local offsetY = texture:getHeight() / 2
+
+	function egg:mousepressed(event)
+		if event.handled then
+			return
+		end
+		if physics.pointInBody(event.wx, event.wx, egg.body) then
+			event.handled = true
+		end
+	end
 
 	function egg:draw()
 		love.graphics.draw(

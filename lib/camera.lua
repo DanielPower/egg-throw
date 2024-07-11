@@ -69,6 +69,10 @@ local Camera = function(opt)
 		return love.graphics.getHeight() / self.scale
 	end
 
+	function camera:getMousePosition()
+		return camera:toWorld(love.mouse.getX(), love.mouse.getY())
+	end
+
 	return camera
 end
 
