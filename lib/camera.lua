@@ -31,13 +31,15 @@ local Camera = function(opt)
 		end
 	end
 
-	function camera:draw(func)
+	function camera:attach()
 		love.graphics.push()
 		love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
 		love.graphics.scale(self.scale)
 		love.graphics.rotate(self.angle)
 		love.graphics.translate(-self.x, -self.y)
-		func()
+	end
+
+	function camera:detach()
 		love.graphics.pop()
 	end
 
