@@ -1,14 +1,16 @@
 local assets = require("assets")
 local geometry = require("lib.geometry")
-local physics = require("lib.physics")
 
 local FRICTION = 0.7
 local RESTITUTION = 0.5
 
 local Egg = function(scene, opt)
-	local body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
+	local egg = {}
 
-	local x1, y1, r1 = 0, -12, 16
+	local body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
+	body:setUserData({ entity = egg, tags = { egg = true } })
+
+	local x1, y1, r1 = 1, -12, 16
 	local x2, y2, r2 = 0, 8, 24
 	local upperBall = love.physics.newCircleShape(x1, y1, r1)
 	local lowerBall = love.physics.newCircleShape(x2, y2, r2)
@@ -28,18 +30,6 @@ local Egg = function(scene, opt)
 	local offsetX = texture:getWidth() / 2
 	local offsetY = texture:getHeight() / 2
 
-	local egg = {}
-
-	function egg:mousepressed(event)
-		if event.handled then
-			return
-		end
-		local wx, wy = scene.context.camera:toWorld(event.x, event.y)
-		if physics.pointInBody(wx, wy, body) then
-			event.handled = true
-		end
-	end
-
 	function egg:draw()
 		love.graphics.draw(
 			texture,
@@ -51,6 +41,10 @@ local Egg = function(scene, opt)
 			offsetX,
 			offsetY
 		)
+	end
+
+	function egg:destroy()
+		body:destroy()
 	end
 
 	return egg

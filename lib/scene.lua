@@ -2,6 +2,7 @@ local Scene = function(opt)
 	local scene = {}
 	scene.entities = {}
 	scene.context = opt.context or {}
+	scene.destroyList = {}
 
 	function scene.keypressed(key)
 		local event = { key = key, handled = false }
@@ -53,6 +54,18 @@ local Scene = function(opt)
 					entity:update(scene, dt)
 				end
 			end
+			for removedEntity in pairs(scene.destroyList) do
+				if removedEntity.destroy then
+					for i, entity in ipairs(scene.entities) do
+						if entity == removedEntity then
+							table.remove(scene.entities, i)
+							break
+						end
+					end
+					scene.destroyList[removedEntity] = nil
+					removedEntity:destroy()
+				end
+			end
 		end
 		if opt.postUpdate then
 			opt.postUpdate(scene, dt)
@@ -77,17 +90,13 @@ local Scene = function(opt)
 		end
 	end
 
-	function scene.addEntity(constructor, entityOptions)
+	function scene.createEntity(constructor, entityOptions)
 		local entity = constructor(scene, entityOptions or {})
 		table.insert(scene.entities, entity)
 	end
 
-	function scene.removeEntity(removedEntity)
-		for i, entity in ipairs(scene.entities) do
-			if entity == removedEntity then
-				table.remove(scene.entities, i)
-			end
-		end
+	function scene.destroyEntity(removedEntity)
+		scene.destroyList[removedEntity] = true
 	end
 
 	return scene

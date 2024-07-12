@@ -1,5 +1,7 @@
+local physics = require("lib.physics")
 local Scene = require("lib.scene")
 local Floor = require("lib.floor")
+local Hand = require("lib.hand")
 local Egg = require("lib.egg")
 local Camera = require("lib.camera")
 
@@ -20,12 +22,14 @@ local Throw = function()
 			scene.context.camera:attach()
 		end,
 		postDraw = function(scene)
+			physics.debugDraw(scene.context.world)
 			scene.context.camera:detach()
 		end,
 	})
 
-	throw.addEntity(Egg, { x = 0, y = -100 })
-	throw.addEntity(Floor)
+	throw.createEntity(Hand)
+	throw.createEntity(Egg, { x = 0, y = -100 })
+	throw.createEntity(Floor)
 
 	return throw
 end

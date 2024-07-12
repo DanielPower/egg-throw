@@ -17,6 +17,12 @@ function love.keypressed(key)
 	if key == "d" then
 		debug = not debug
 	end
+	if key == "r" then
+		love.load()
+	end
+	if key == "escape" then
+		love.event.quit()
+	end
 	scene.keypressed(key)
 end
 
