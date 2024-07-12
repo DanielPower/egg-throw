@@ -1,11 +1,13 @@
 local Hand = function(scene)
 	local hand = {}
 
-	local body = love.physics.newBody(scene.context.world, 0, 0, "static")
+	local body = love.physics.newBody(scene.context.world, 0, 0, "dynamic")
+	local mouseJoint = love.physics.newMouseJoint(body, 0, 0)
+	local joint = nil
 	body:setUserData({ entity = hand })
 
 	function hand:update(dt)
-		body:setPosition(scene.context.camera:getMousePosition())
+		mouseJoint:setTarget(scene.context.camera:getMousePosition())
 	end
 
 	function hand:mousepressed(event)
@@ -20,10 +22,18 @@ local Hand = function(scene)
 				local fixtures = otherBody:getFixtures()
 				for _, fixture in ipairs(fixtures) do
 					if fixture:testPoint(wx, wy) then
-						scene.destroyEntity(userData.entity)
+						joint = love.physics.newDistanceJoint(body, otherBody, wx, wy, wx, wy)
+						break
 					end
 				end
 			end
+		end
+	end
+
+	function hand:mousereleased(event)
+		if joint then
+			joint:destroy()
+			joint = nil
 		end
 	end
 

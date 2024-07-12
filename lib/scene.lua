@@ -42,6 +42,25 @@ local Scene = function(opt)
 		end
 	end
 
+	function scene.mousereleased(x, y, button)
+		local event = { x = x, y = y, button = button, handled = false }
+		if opt.preMousereleased then
+			opt.preMousereleased(scene, event)
+		end
+		if opt.mousepressed then
+			opt.mousepressed(scene, event)
+		else
+			for _, entity in ipairs(scene.entities) do
+				if entity.mousereleased then
+					entity:mousereleased(event)
+				end
+			end
+		end
+		if opt.postMousereleased then
+			opt.postMousereleased(scene, event)
+		end
+	end
+
 	function scene.update(dt)
 		if opt.preUpdate then
 			opt.preUpdate(scene, dt)
