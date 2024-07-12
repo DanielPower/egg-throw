@@ -1,6 +1,4 @@
-local physics = require("lib.physics")
-
-local Hand = function(scene, opt)
+local Hand = function(scene)
 	local hand = {}
 
 	local body = love.physics.newBody(scene.context.world, 0, 0, "static")
@@ -16,11 +14,10 @@ local Hand = function(scene, opt)
 			return
 		end
 		local bodies = scene.context.world:getBodies()
-		print("click")
 		for _, otherBody in ipairs(bodies) do
 			local userData = otherBody:getUserData()
 			if userData and userData.tags and userData.tags.egg then
-				local fixtures = otherBody:getFixtureList()
+				local fixtures = otherBody:getFixtures()
 				for _, fixture in ipairs(fixtures) do
 					if fixture:testPoint(wx, wy) then
 						scene.destroyEntity(userData.entity)
