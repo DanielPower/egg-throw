@@ -11,6 +11,10 @@ local function Floor(scene)
 	local shape = love.physics.newEdgeShape(-1000, 0, 1000, 0)
 	love.physics.newFixture(body, shape)
 
+	function floor:update(dt)
+		body:setPosition(scene.context.camera.x, 0)
+	end
+
 	function floor:draw()
 		local offsetX = scene.context.camera.x
 		local viewportWidth = scene.context.camera:getViewportWidth()

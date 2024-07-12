@@ -1,7 +1,7 @@
 local Scene = function(opt)
 	local scene = {}
 	scene.entities = {}
-	scene.context = opt.context or {}
+	scene.context = {}
 	scene.destroyList = {}
 
 	function scene.keypressed(key)
@@ -112,10 +112,15 @@ local Scene = function(opt)
 	function scene.createEntity(constructor, entityOptions)
 		local entity = constructor(scene, entityOptions or {})
 		table.insert(scene.entities, entity)
+		return entity
 	end
 
 	function scene.destroyEntity(removedEntity)
 		scene.destroyList[removedEntity] = true
+	end
+
+	if opt.initialize then
+		opt.initialize(scene)
 	end
 
 	return scene

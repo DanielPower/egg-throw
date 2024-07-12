@@ -6,9 +6,8 @@ local RESTITUTION = 0.5
 
 local Egg = function(scene, opt)
 	local egg = {}
-
-	local body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
-	body:setUserData({ entity = egg, tags = { egg = true } })
+	egg.body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
+	egg.body:setUserData({ entity = egg, tags = { egg = true } })
 
 	local x1, y1, r1 = 1, -12, 16
 	local x2, y2, r2 = 0, 8, 24
@@ -16,9 +15,9 @@ local Egg = function(scene, opt)
 	local lowerBall = love.physics.newCircleShape(x2, y2, r2)
 	local midSection =
 		love.physics.newPolygonShape(geometry.external_tangents(x1, y1, r1, x2, y2, r2))
-	local f1 = love.physics.newFixture(body, upperBall)
-	local f2 = love.physics.newFixture(body, lowerBall)
-	local f3 = love.physics.newFixture(body, midSection)
+	local f1 = love.physics.newFixture(egg.body, upperBall)
+	local f2 = love.physics.newFixture(egg.body, lowerBall)
+	local f3 = love.physics.newFixture(egg.body, midSection)
 	f1:setFriction(FRICTION)
 	f2:setFriction(FRICTION)
 	f3:setFriction(FRICTION)
@@ -33,9 +32,9 @@ local Egg = function(scene, opt)
 	function egg:draw()
 		love.graphics.draw(
 			texture,
-			body:getX(),
-			body:getY(),
-			body:getAngle(),
+			egg.body:getX(),
+			egg.body:getY(),
+			egg.body:getAngle(),
 			1,
 			1,
 			offsetX,
@@ -44,7 +43,7 @@ local Egg = function(scene, opt)
 	end
 
 	function egg:destroy()
-		body:destroy()
+		egg.body:destroy()
 	end
 
 	return egg

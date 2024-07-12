@@ -8,7 +8,7 @@ local Camera = function(opt)
 
 	function camera:update(dt)
 		if camera.target then
-			camera:moveTo(camera.target.body:getX(), camera.target.body:getY())
+			camera:moveTo(camera.target())
 		else
 			if love.keyboard.isDown("up") then
 				self:move(0, -100 * dt)
@@ -73,6 +73,14 @@ local Camera = function(opt)
 
 	function camera:getMousePosition()
 		return camera:toWorld(love.mouse.getX(), love.mouse.getY())
+	end
+
+	function camera:inViewport(x, y)
+		local w, h = camera:getViewportWidth(), camera:getViewportHeight()
+		return x >= camera.x - w / 2
+			and x <= camera.x + w / 2
+			and y >= camera.y - h / 2
+			and y <= camera.y + h / 2
 	end
 
 	return camera

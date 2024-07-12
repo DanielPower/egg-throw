@@ -7,10 +7,15 @@ local Camera = require("lib.camera")
 
 local Throw = function()
 	local throw = Scene({
-		context = {
-			world = love.physics.newWorld(0, 9.81 * 64, true),
-			camera = Camera({ y = -160, scale = 2 }),
-		},
+		initialize = function(scene)
+			scene.context.world = love.physics.newWorld(0, 9.81 * 64, true)
+			scene.context.camera = Camera({ y = -160, scale = 2 })
+			scene.context.stage = "pre-throw"
+
+			scene.createEntity(Hand)
+			scene.createEntity(Floor)
+			scene.context.egg = scene.createEntity(Egg, { x = 0, y = -100 })
+		end,
 		preUpdate = function(scene, dt)
 			scene.context.world:update(dt)
 		end,
@@ -24,12 +29,13 @@ local Throw = function()
 		postDraw = function(scene)
 			physics.debugDraw(scene.context.world)
 			scene.context.camera:detach()
+			if scene.context.stage == "throw" then
+				love.graphics.setColor(1, 0, 0)
+				love.graphics.setFont(love.graphics.newFont(30))
+				love.graphics.print("Distance: " .. math.floor(scene.context.camera.x), 10, 10)
+			end
 		end,
 	})
-
-	throw.createEntity(Hand)
-	throw.createEntity(Egg, { x = 0, y = -100 })
-	throw.createEntity(Floor)
 
 	return throw
 end

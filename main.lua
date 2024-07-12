@@ -7,6 +7,7 @@ local pause = false
 local debug = false
 
 function love.load()
+	love.physics.setMeter(64)
 	scene = Throw()
 end
 
