@@ -21,6 +21,9 @@ local Throw = function()
 		end,
 		postUpdate = function(scene, dt)
 			scene.context.camera:update(dt)
+			if scene.context.stage == "throw" and not scene.context.egg.body:isAwake() then
+				scene.context.stage = "done"
+			end
 		end,
 		preDraw = function(scene)
 			love.graphics.clear(0.53, 0.81, 0.92)
@@ -29,10 +32,20 @@ local Throw = function()
 		postDraw = function(scene)
 			physics.debugDraw(scene.context.world)
 			scene.context.camera:detach()
-			if scene.context.stage == "throw" then
-				love.graphics.setColor(1, 0, 0)
-				love.graphics.setFont(love.graphics.newFont(30))
-				love.graphics.print("Distance: " .. math.floor(scene.context.camera.x), 10, 10)
+			love.graphics.setColor(1, 0, 0)
+			love.graphics.setFont(love.graphics.newFont(30))
+			if scene.context.stage == "pre-throw" then
+				love.graphics.print("Click and drag the egg to throw it", 100, 100)
+			end
+			if scene.context.stage == "throw" or scene.context.stage == "done" then
+				love.graphics.print(
+					"Distance: " .. math.floor(scene.context.egg.body:getX()),
+					10,
+					10
+				)
+				if scene.context.stage == "done" then
+					love.graphics.print("Press R to restart", 10, 40)
+				end
 			end
 		end,
 	})

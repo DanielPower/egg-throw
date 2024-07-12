@@ -37,7 +37,7 @@ local Hand = function(scene)
 							joint = love.physics.newMouseJoint(body, wx, wy),
 							joinedBody = body,
 						}
-						grab.joint:setMaxForce(1000)
+						grab.joint:setMaxForce(1500)
 						break
 					end
 				end
