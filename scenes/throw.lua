@@ -52,7 +52,7 @@ local Throw = function()
 
 			scene.createEntity(Hand)
 			scene.createEntity(Floor)
-			scene.createEntity(Mine, { x = 60, y = -100 })
+			scene.createEntity(Mine, { x = 60, y = -24 })
 			scene.context.egg = scene.createEntity(Egg, { x = 0, y = -100 })
 		end,
 		preUpdate = function(scene, dt)

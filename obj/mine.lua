@@ -8,10 +8,11 @@ local explodeAnimation = anim8.newAnimation(bombGrid("11-12", 1), 0.1)
 
 local Mine = function(scene, opt)
 	local mine = {}
-	local body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
+	local body = love.physics.newBody(scene.context.world, opt.x, opt.y, "static")
 	body:setUserData({ name = "b_mine", entity = mine })
 	local fixture = love.physics.newFixture(body, love.physics.newCircleShape(24), 1)
 	fixture:setUserData({ name = "f_mine", entity = mine, mine = true })
+	fixture:setSensor(true)
 	local animation = idleAnimation
 	local explodeTimer = nil
 
