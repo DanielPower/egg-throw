@@ -70,20 +70,20 @@ local Scene = function(opt)
 		else
 			for _, entity in ipairs(scene.entities) do
 				if entity.update then
-					entity:update(scene, dt)
+					entity:update(dt)
 				end
 			end
 			for removedEntity in pairs(scene.destroyList) do
 				if removedEntity.destroy then
-					for i, entity in ipairs(scene.entities) do
-						if entity == removedEntity then
-							table.remove(scene.entities, i)
-							break
-						end
-					end
-					scene.destroyList[removedEntity] = nil
 					removedEntity:destroy()
 				end
+				for i, entity in ipairs(scene.entities) do
+					if entity == removedEntity then
+						table.remove(scene.entities, i)
+						break
+					end
+				end
+				scene.destroyList[removedEntity] = nil
 			end
 		end
 		if opt.postUpdate then

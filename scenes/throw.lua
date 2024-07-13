@@ -4,6 +4,7 @@ local Camera = require("lib.camera")
 local Floor = require("obj.floor")
 local Hand = require("obj.hand")
 local Egg = require("obj.egg")
+local Mine = require("obj.mine")
 
 local Throw = function()
 	local throw = Scene({
@@ -14,6 +15,7 @@ local Throw = function()
 
 			scene.createEntity(Hand)
 			scene.createEntity(Floor)
+			scene.createEntity(Mine, { x = 60, y = -100 })
 			scene.context.egg = scene.createEntity(Egg, { x = 0, y = -100 })
 		end,
 		preUpdate = function(scene, dt)
