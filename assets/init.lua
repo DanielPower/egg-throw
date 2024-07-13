@@ -1,7 +1,6 @@
 local textures = {}
 local quads = {}
 
-textures.egg = love.graphics.newImage("assets/egg/Purple.png")
 textures.background = love.graphics.newImage("assets/background.jpg")
 textures.grass = love.graphics.newImage("assets/grass/grass.png")
 

@@ -18,6 +18,16 @@ local Throw = function()
 		end,
 		preUpdate = function(scene, dt)
 			scene.context.world:update(dt)
+			if scene.context.stage == "pre-throw" then
+				if not scene.context.camera:inViewport(scene.context.egg.body:getPosition()) then
+					print("inViewport")
+					scene.context.stage = "throw"
+					scene.context.camera.target = function()
+						local x, y = scene.context.egg.body:getPosition()
+						return x, y - 100
+					end
+				end
+			end
 		end,
 		postUpdate = function(scene, dt)
 			scene.context.camera:update(dt)

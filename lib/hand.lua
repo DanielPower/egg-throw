@@ -1,23 +1,10 @@
 local Hand = function(scene)
 	local hand = {}
-	local grab = nil
+	local joint = nil
 
-	local function advanceStage()
-		scene.context.stage = "throw"
-		scene.context.camera.target = function()
-			local x, y = scene.context.egg.body:getPosition()
-			return x, y - 100
-		end
-		scene.destroyEntity(hand)
-	end
-
-	function hand:update(dt)
-		if grab then
-			grab.joint:setTarget(scene.context.camera:getMousePosition())
-			local x, y = grab.joinedBody:getPosition()
-			if not scene.context.camera:inViewport(x, y) then
-				advanceStage()
-			end
+	function hand:update()
+		if joint then
+			joint:setTarget(scene.context.camera:getMousePosition())
 		end
 	end
 
@@ -33,11 +20,7 @@ local Hand = function(scene)
 				local fixtures = body:getFixtures()
 				for _, fixture in ipairs(fixtures) do
 					if fixture:testPoint(wx, wy) then
-						grab = {
-							joint = love.physics.newMouseJoint(body, wx, wy),
-							joinedBody = body,
-						}
-						grab.joint:setMaxForce(1500)
+						joint = love.physics.newMouseJoint(body, wx, wy)
 						break
 					end
 				end
@@ -46,14 +29,15 @@ local Hand = function(scene)
 	end
 
 	function hand:mousereleased()
-		if grab then
-			advanceStage()
+		if joint then
+			joint:destroy()
+			joint = nil
 		end
 	end
 
 	function hand:draw()
-		if grab then
-			local x1, y1, x2, y2 = grab.joint:getAnchors()
+		if joint then
+			local x1, y1, x2, y2 = joint:getAnchors()
 			love.graphics.setColor(1, 0, 0)
 			love.graphics.line(x1, y1, x2, y2)
 			love.graphics.setColor(1, 1, 1)
@@ -61,8 +45,8 @@ local Hand = function(scene)
 	end
 
 	function hand:destroy()
-		if grab then
-			grab.joint:destroy()
+		if joint then
+			joint:destroy()
 		end
 	end
 
