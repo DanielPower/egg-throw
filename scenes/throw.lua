@@ -10,6 +10,43 @@ local Throw = function()
 	local throw = Scene({
 		initialize = function(scene)
 			scene.context.world = love.physics.newWorld(0, 9.81 * 64, true)
+			scene.context.world:setCallbacks(function(a, b, contact)
+				local aData = a:getUserData()
+				local bData = b:getUserData()
+				if aData and aData.entity and aData.entity.beginContact then
+					aData.entity:beginContact(b, a, contact)
+				end
+				if bData and bData.entity and bData.entity.beginContact then
+					bData.entity:beginContact(a, b, contact)
+				end
+			end, function(a, b, contact)
+				local aData = a:getUserData()
+				local bData = b:getUserData()
+				if aData and aData.entity and aData.entity.endContact then
+					aData.entity:endContact(b, a, contact)
+				end
+				if bData and bData.entity and bData.entity.endContact then
+					bData.entity:endContact(a, b, contact)
+				end
+			end, function(a, b, contact)
+				local aData = a:getUserData()
+				local bData = b:getUserData()
+				if aData and aData.entity and aData.entity.preSolve then
+					aData.entity:preSolve(b, a, contact)
+				end
+				if bData and bData.entity and bData.entity.preSolve then
+					bData.entity:preSolve(a, b, contact)
+				end
+			end, function(a, b, contact)
+				local aData = a:getUserData()
+				local bData = b:getUserData()
+				if aData and aData.entity and aData.entity.postSolve then
+					aData.entity:postSolve(b, a, contact)
+				end
+				if bData and bData.entity and bData.entity.postSolve then
+					bData.entity:postSolve(a, b, contact)
+				end
+			end)
 			scene.context.camera = Camera({ y = -160, scale = 2 })
 			scene.context.stage = "pre-throw"
 

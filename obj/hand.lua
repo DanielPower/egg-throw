@@ -16,7 +16,7 @@ local Hand = function(scene)
 		local bodies = scene.context.world:getBodies()
 		for _, body in ipairs(bodies) do
 			local userData = body:getUserData()
-			if userData and userData.tags and userData.tags.egg then
+			if userData and userData.tags and userData.egg then
 				local fixtures = body:getFixtures()
 				for _, fixture in ipairs(fixtures) do
 					if fixture:testPoint(wx, wy) then

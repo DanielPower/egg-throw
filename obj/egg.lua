@@ -7,7 +7,7 @@ local RESTITUTION = 0.5
 local Egg = function(scene, opt)
 	local egg = {}
 	egg.body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
-	egg.body:setUserData({ entity = egg, tags = { egg = true } })
+	egg.body:setUserData({ name = "b_egg", entity = egg, egg = true })
 
 	local x1, y1, r1 = 1, -12, 16
 	local x2, y2, r2 = 0, 8, 24
@@ -19,11 +19,14 @@ local Egg = function(scene, opt)
 	local f2 = love.physics.newFixture(egg.body, lowerBall)
 	local f3 = love.physics.newFixture(egg.body, midSection)
 	f1:setFriction(FRICTION)
-	f2:setFriction(FRICTION)
-	f3:setFriction(FRICTION)
 	f1:setRestitution(RESTITUTION)
+	f1:setUserData({ name = "f_eggUpperBall", entity = egg, egg = true })
+	f2:setFriction(FRICTION)
 	f2:setRestitution(RESTITUTION)
+	f2:setUserData({ name = "f_eggLowerBall", entity = egg, egg = true })
+	f3:setFriction(FRICTION)
 	f3:setRestitution(RESTITUTION)
+	f3:setUserData({ name = "f_eggMidSection", entity = egg, egg = true })
 
 	local texture = assets.textures.egg[math.random(#assets.textures.egg)]
 	local offsetX = texture:getWidth() / 2

@@ -1,4 +1,5 @@
 local anim8 = require("lib/anim8")
+local inspect = require("lib/inspect")
 
 local bomb = love.graphics.newImage("assets/bomb/bomb.png")
 local bombGrid = anim8.newGrid(64, 64, bomb:getWidth(), bomb:getHeight())
@@ -8,29 +9,14 @@ local explodeAnimation = anim8.newAnimation(bombGrid("11-12", 1), 0.1)
 local Mine = function(scene, opt)
 	local mine = {}
 	local body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
-	love.physics.newFixture(body, love.physics.newCircleShape(24), 1)
+	body:setUserData({ name = "b_mine", entity = mine })
+	local fixture = love.physics.newFixture(body, love.physics.newCircleShape(24), 1)
+	fixture:setUserData({ name = "f_mine", entity = mine, mine = true })
 	local animation = idleAnimation
 	local explodeTimer = nil
 
 	function mine:update(dt)
 		animation:update(dt)
-		print("update")
-		print(explodeTimer)
-
-		local contacts = body:getContacts()
-		for _, contact in pairs(contacts) do
-			if not contact:isTouching() then
-				break
-			end
-			for _, fixture in pairs({ contact:getFixtures() }) do
-				local contactBody = fixture:getBody()
-				local userData = contactBody:getUserData()
-				if userData and userData.tags.egg and explodeTimer == nil then
-					animation = explodeAnimation
-					explodeTimer = 0.2
-				end
-			end
-		end
 
 		if explodeTimer then
 			explodeTimer = explodeTimer - dt
@@ -38,6 +24,18 @@ local Mine = function(scene, opt)
 				scene.context.egg.body:applyLinearImpulse(0, -500)
 				scene.destroyEntity(mine)
 			end
+		end
+	end
+
+	function mine:beginContact(otherFixture)
+		local otherFixtureUserData = otherFixture:getUserData()
+		print("beginContact", inspect(otherFixture:getUserData()))
+		if otherFixtureUserData and otherFixtureUserData.name then
+			print(otherFixtureUserData.name)
+		end
+		if explodeTimer == nil and otherFixtureUserData and otherFixtureUserData.egg then
+			animation = explodeAnimation
+			explodeTimer = 0.2
 		end
 	end
 
