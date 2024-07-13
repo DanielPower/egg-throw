@@ -1,9 +1,9 @@
 local physics = require("lib.physics")
 local Scene = require("lib.scene")
-local Floor = require("lib.floor")
-local Hand = require("lib.hand")
-local Egg = require("lib.egg")
 local Camera = require("lib.camera")
+local Floor = require("obj.floor")
+local Hand = require("obj.hand")
+local Egg = require("obj.egg")
 
 local Throw = function()
 	local throw = Scene({
@@ -20,7 +20,6 @@ local Throw = function()
 			scene.context.world:update(dt)
 			if scene.context.stage == "pre-throw" then
 				if not scene.context.camera:inViewport(scene.context.egg.body:getPosition()) then
-					print("inViewport")
 					scene.context.stage = "throw"
 					scene.context.camera.target = function()
 						local x, y = scene.context.egg.body:getPosition()
