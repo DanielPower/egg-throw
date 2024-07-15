@@ -45,6 +45,7 @@ end
 function love.draw()
 	love.graphics.setColor(1, 1, 1, 1)
 	scene.draw()
+	scene.drawUI()
 	if debug then
 		love.graphics.setColor(1, 0, 0)
 		love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)

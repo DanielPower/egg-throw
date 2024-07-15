@@ -4,7 +4,6 @@ local Camera = require("lib.camera")
 local Floor = require("obj.floor")
 local Hand = require("obj.hand")
 local Egg = require("obj.egg")
-local Mine = require("obj.mine")
 
 local Throw = function()
 	local throw = Scene({
@@ -50,15 +49,15 @@ local Throw = function()
 			scene.context.camera = Camera({ y = -160, scale = 2 })
 			scene.context.stage = "pre-throw"
 
-			scene.createEntity(Hand)
 			scene.createEntity(Floor)
-			scene.createEntity(Mine, { x = 60, y = -24 })
+			scene.context.hand = scene.createEntity(Hand)
 			scene.context.egg = scene.createEntity(Egg, { x = 0, y = -100 })
 		end,
 		preUpdate = function(scene, dt)
 			scene.context.world:update(dt)
 			if scene.context.stage == "pre-throw" then
 				if not scene.context.camera:inViewport(scene.context.egg.body:getPosition()) then
+					scene.destroyEntity(scene.context.hand)
 					scene.context.stage = "throw"
 					scene.context.camera.target = function()
 						local x, y = scene.context.egg.body:getPosition()

@@ -109,6 +109,24 @@ local Scene = function(opt)
 		end
 	end
 
+	function scene.drawUI()
+		if opt.preDrawUI then
+			opt.preDrawUI(scene)
+		end
+		if opt.drawUI then
+			opt.drawUI(scene)
+		else
+			for _, entity in ipairs(scene.entities) do
+				if entity.drawUI then
+					entity:drawUI()
+				end
+			end
+		end
+		if opt.postDrawUI then
+			opt.postDrawUI(scene)
+		end
+	end
+
 	function scene.createEntity(constructor, entityOptions)
 		local entity = constructor(scene, entityOptions or {})
 		table.insert(scene.entities, entity)
