@@ -11,7 +11,7 @@ local Hand = function(scene)
 	handBody:setMass(0)
 	handBody:setGravityScale(0)
 	local handJoint = love.physics.newMouseJoint(handBody, 0, 0)
-	handJoint:setMaxForce(10000)
+	handJoint:setMaxForce(GAME_STATE.hand_strength)
 	love.mouse.setRelativeMode(true)
 	love.mouse.setGrabbed(true)
 
@@ -21,7 +21,6 @@ local Hand = function(scene)
 
 	function hand:mousepressed(event)
 		local x, y = handBody:getPosition()
-		print(x, y)
 		if event.handled then
 			return
 		end

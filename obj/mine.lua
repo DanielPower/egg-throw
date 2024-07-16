@@ -30,10 +30,6 @@ local Mine = function(scene, opt)
 
 	function mine:beginContact(otherFixture)
 		local otherFixtureUserData = otherFixture:getUserData()
-		print("beginContact", inspect(otherFixture:getUserData()))
-		if otherFixtureUserData and otherFixtureUserData.name then
-			print(otherFixtureUserData.name)
-		end
 		if explodeTimer == nil and otherFixtureUserData and otherFixtureUserData.egg then
 			animation = explodeAnimation
 			explodeTimer = 0.2

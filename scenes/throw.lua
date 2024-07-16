@@ -5,7 +5,8 @@ local Floor = require("obj.floor")
 local Hand = require("obj.hand")
 local Egg = require("obj.egg")
 
-local Throw = function()
+local Throw
+Throw = function()
 	local throw = Scene({
 		initialize = function(scene)
 			scene.context.world = love.physics.newWorld(0, 9.81 * 64, true)
@@ -53,6 +54,11 @@ local Throw = function()
 			scene.context.hand = scene.createEntity(Hand)
 			scene.context.egg = scene.createEntity(Egg, { x = 0, y = -100 })
 		end,
+		preMousepressed = function(scene, x, y, button)
+			if scene.context.stage == "done" then
+				GAME_STATE.scene = Throw()
+			end
+		end,
 		preUpdate = function(scene, dt)
 			scene.context.world:update(dt)
 			if scene.context.stage == "pre-throw" then
@@ -91,7 +97,7 @@ local Throw = function()
 					10
 				)
 				if scene.context.stage == "done" then
-					love.graphics.print("Press R to restart", 10, 40)
+					love.graphics.print("Click to continue", 10, 40)
 				end
 			end
 		end,

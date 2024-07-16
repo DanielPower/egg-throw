@@ -2,21 +2,24 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 
 local Throw = require("scenes.throw")
 
-local scene
-local pause = false
-local debug = false
-
 function love.load()
 	love.physics.setMeter(64)
-	scene = Throw()
+	GAME_STATE = {
+		scene = nil,
+		pause = false,
+		debug = false,
+		hand_strength = 10000,
+		money = 0,
+	}
+	GAME_STATE.scene = Throw()
 end
 
 function love.keypressed(key)
 	if key == "p" then
-		pause = not pause
+		GAME_STATE.pause = not GAME_STATE.pause
 	end
 	if key == "d" then
-		debug = not debug
+		GAME_STATE.debug = not GAME_STATE.debug
 	end
 	if key == "r" then
 		love.load()
@@ -24,35 +27,35 @@ function love.keypressed(key)
 	if key == "escape" then
 		love.event.quit()
 	end
-	scene.keypressed(key)
+	GAME_STATE.scene.keypressed(key)
 end
 
 function love.mousepressed(x, y, button)
-	scene.mousepressed(x, y, button)
+	GAME_STATE.scene.mousepressed(x, y, button)
 end
 
 function love.mousereleased(x, y, button)
-	scene.mousereleased(x, y, button)
+	GAME_STATE.scene.mousereleased(x, y, button)
 end
 
 function love.mousemoved(x, y, dx, dy)
 	if dy ~= 0 or dx ~= 0 then
-		scene.mousemoved(x, y, dx, dy)
+		GAME_STATE.scene.mousemoved(x, y, dx, dy)
 	end
 end
 
 function love.update(dt)
-	if pause then
+	if GAME_STATE.pause then
 		return
 	end
-	scene.update(dt)
+	GAME_STATE.scene.update(dt)
 end
 
 function love.draw()
 	love.graphics.setColor(1, 1, 1, 1)
-	scene.draw()
-	scene.drawUI()
-	if debug then
+	GAME_STATE.scene.draw()
+	GAME_STATE.scene.drawUI()
+	if GAME_STATE.debug then
 		love.graphics.setColor(1, 0, 0)
 		love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
 	end
