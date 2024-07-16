@@ -61,6 +61,25 @@ local Scene = function(opt)
 		end
 	end
 
+	function scene.mousemoved(x, y, dx, dy)
+		local event = { x = x, y = y, dx = dx, dy = dy, handled = false }
+		if opt.preMousemoved then
+			opt.preMousemoved(scene, event)
+		end
+		if opt.mousemoved then
+			opt.mousemoved(scene, event)
+		else
+			for _, entity in ipairs(scene.entities) do
+				if entity.mousemoved then
+					entity:mousemoved(event)
+				end
+			end
+		end
+		if opt.postMousemoved then
+			opt.postMousemoved(scene, event)
+		end
+	end
+
 	function scene.update(dt)
 		if opt.preUpdate then
 			opt.preUpdate(scene, dt)

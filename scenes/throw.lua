@@ -61,7 +61,7 @@ local Throw = function()
 					scene.context.stage = "throw"
 					scene.context.camera.target = function()
 						local x, y = scene.context.egg.body:getPosition()
-						return x, y - 100
+						return x, y - 50
 					end
 				end
 			end

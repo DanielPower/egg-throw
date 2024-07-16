@@ -8,6 +8,7 @@ local Egg = function(scene, opt)
 	local egg = {}
 	egg.body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
 	egg.body:setUserData({ name = "b_egg", entity = egg, egg = true })
+	egg.body:setMass(100)
 
 	local x1, y1, r1 = 1, -12, 16
 	local x2, y2, r2 = 0, 8, 24

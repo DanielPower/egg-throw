@@ -35,6 +35,12 @@ function love.mousereleased(x, y, button)
 	scene.mousereleased(x, y, button)
 end
 
+function love.mousemoved(x, y, dx, dy)
+	if dy ~= 0 or dx ~= 0 then
+		scene.mousemoved(x, y, dx, dy)
+	end
+end
+
 function love.update(dt)
 	if pause then
 		return

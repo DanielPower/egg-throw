@@ -1,3 +1,4 @@
+local inspect = require("lib/inspect")
 local handImage = love.graphics.newImage("assets/madness.png")
 local openHandQuad = love.graphics.newQuad(644, 247, 76, 89, handImage:getDimensions())
 local closedHandQuad = love.graphics.newQuad(419, 281, 72, 74, handImage:getDimensions())
@@ -5,15 +6,22 @@ local closedHandQuad = love.graphics.newQuad(419, 281, 72, 74, handImage:getDime
 local Hand = function(scene)
 	local hand = {}
 	local joint = nil
+	local dx, dy = 0, 0
+	local handBody = love.physics.newBody(scene.context.world, 0, 0, "dynamic")
+	handBody:setMass(0)
+	handBody:setGravityScale(0)
+	local handJoint = love.physics.newMouseJoint(handBody, 0, 0)
+	handJoint:setMaxForce(10000)
+	love.mouse.setRelativeMode(true)
+	love.mouse.setGrabbed(true)
 
-	function hand:update()
-		if joint then
-			joint:setTarget(scene.context.camera:getMousePosition())
-		end
+	function hand:mousemoved(event)
+		dx, dy = event.dx, event.dy
 	end
 
 	function hand:mousepressed(event)
-		local wx, wy = scene.context.camera:toWorld(event.x, event.y)
+		local x, y = handBody:getPosition()
+		print(x, y)
 		if event.handled then
 			return
 		end
@@ -23,8 +31,8 @@ local Hand = function(scene)
 			if userData and userData.egg then
 				local fixtures = body:getFixtures()
 				for _, fixture in ipairs(fixtures) do
-					if fixture:testPoint(wx, wy) then
-						joint = love.physics.newMouseJoint(body, wx, wy)
+					if fixture:testPoint(x, y) then
+						joint = love.physics.newWeldJoint(handBody, body, x, y, x, y, false)
 						break
 					end
 				end
@@ -39,6 +47,12 @@ local Hand = function(scene)
 		end
 	end
 
+	function hand:update(dt)
+		local x, y = handBody:getPosition()
+		handJoint:setTarget(x + dx, y + dy)
+		dx, dy = 0, 0
+	end
+
 	function hand:draw()
 		if joint then
 			local x1, y1, x2, y2 = joint:getAnchors()
@@ -49,7 +63,7 @@ local Hand = function(scene)
 	end
 
 	function hand:drawUI()
-		local x, y = love.mouse.getPosition()
+		local x, y = scene.context.camera:toScreen(handBody:getPosition())
 		if joint then
 			love.graphics.draw(handImage, closedHandQuad, x, y, 0, 1, 1, 36, 37)
 		else
