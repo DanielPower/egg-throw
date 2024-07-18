@@ -1,8 +1,8 @@
 local assets = require("assets")
 local geometry = require("lib.geometry")
 
-local FRICTION = 0.7
-local RESTITUTION = 0.5
+local FRICTION = 1
+local RESTITUTION = 0.3
 
 local Egg = function(scene, opt)
 	local egg = {}

@@ -7,6 +7,7 @@ local Egg = require("obj.egg")
 
 local Throw
 Throw = function()
+	local distance = 0
 	local throw = Scene({
 		initialize = function(scene)
 			scene.context.world = love.physics.newWorld(0, 9.81 * 64, true)
@@ -77,6 +78,9 @@ Throw = function()
 			if scene.context.stage == "throw" and not scene.context.egg.body:isAwake() then
 				scene.context.stage = "done"
 			end
+			distance = math.floor(
+				(scene.context.egg.body:getX() - scene.context.camera:getViewportWidth() / 2) / 64
+			)
 		end,
 		preDraw = function(scene)
 			love.graphics.clear(0.53, 0.81, 0.92)
@@ -91,11 +95,7 @@ Throw = function()
 				love.graphics.print("Click and drag the egg to throw it", 100, 100)
 			end
 			if scene.context.stage == "throw" or scene.context.stage == "done" then
-				love.graphics.print(
-					"Distance: " .. math.floor(scene.context.egg.body:getX()),
-					10,
-					10
-				)
+				love.graphics.print("Distance: " .. distance .. " egg-lengths", 10, 10)
 				if scene.context.stage == "done" then
 					love.graphics.print("Click to continue", 10, 40)
 				end

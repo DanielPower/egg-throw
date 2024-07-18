@@ -8,8 +8,9 @@ local Hand = function(scene)
 	local joint = nil
 	local dx, dy = 0, 0
 	local handBody = love.physics.newBody(scene.context.world, 0, 0, "dynamic")
-	handBody:setMass(0)
+	handBody:setMass(10)
 	handBody:setGravityScale(0)
+	handBody:setInertia(0)
 	local handJoint = love.physics.newMouseJoint(handBody, 0, 0)
 	handJoint:setMaxForce(GAME_STATE.hand_strength)
 	love.mouse.setRelativeMode(true)
@@ -31,7 +32,7 @@ local Hand = function(scene)
 				local fixtures = body:getFixtures()
 				for _, fixture in ipairs(fixtures) do
 					if fixture:testPoint(x, y) then
-						joint = love.physics.newWeldJoint(handBody, body, x, y, x, y, false)
+						joint = love.physics.newRevoluteJoint(handBody, body, x, y, x, y, false)
 						break
 					end
 				end
