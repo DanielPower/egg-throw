@@ -1,6 +1,7 @@
 love.graphics.setDefaultFilter("nearest", "nearest")
 
 local Throw = require("scenes.throw")
+local Store = require("scenes.store")
 
 function love.load()
 	love.physics.setMeter(64)
@@ -23,6 +24,10 @@ function love.keypressed(key)
 	end
 	if key == "r" then
 		love.load()
+	end
+	if key == "s" then
+		GAME_STATE.scene.destroy()
+		GAME_STATE.scene = Store()
 	end
 	if key == "escape" then
 		love.event.quit()

@@ -75,6 +75,8 @@ local Hand = function(scene)
 		if joint then
 			joint:destroy()
 		end
+		love.mouse.setRelativeMode(false)
+		love.mouse.setGrabbed(false)
 	end
 
 	return hand

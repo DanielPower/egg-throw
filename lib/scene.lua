@@ -146,6 +146,14 @@ local Scene = function(opt)
 		end
 	end
 
+	function scene.destroy()
+		for _, entity in ipairs(scene.entities) do
+			if entity.destroy then
+				entity:destroy()
+			end
+		end
+	end
+
 	function scene.createEntity(constructor, entityOptions)
 		local entity = constructor(scene, entityOptions or {})
 		table.insert(scene.entities, entity)
