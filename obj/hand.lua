@@ -12,7 +12,7 @@ local Hand = function(scene)
 	handBody:setGravityScale(0)
 	handBody:setInertia(0)
 	local handJoint = love.physics.newMouseJoint(handBody, 0, 0)
-	handJoint:setMaxForce(GAME_STATE.hand_strength)
+	handJoint:setMaxForce(5000 * 1.25 ^ GAME_STATE.hand_strength)
 	love.mouse.setRelativeMode(true)
 	love.mouse.setGrabbed(true)
 

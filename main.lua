@@ -9,7 +9,7 @@ function love.load()
 		scene = nil,
 		pause = false,
 		debug = false,
-		hand_strength = 2000,
+		hand_strength = 0,
 		money = 0,
 	}
 	GAME_STATE.scene = Throw()

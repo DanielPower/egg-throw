@@ -8,7 +8,6 @@ local Egg = function(scene, opt)
 	local egg = {}
 	egg.body = love.physics.newBody(scene.context.world, opt.x, opt.y, "dynamic")
 	egg.body:setUserData({ name = "b_egg", entity = egg, egg = true })
-	egg.body:setMass(100)
 
 	local x1, y1, r1 = 1, -12, 16
 	local x2, y2, r2 = 0, 8, 24
@@ -19,6 +18,7 @@ local Egg = function(scene, opt)
 	local f1 = love.physics.newFixture(egg.body, upperBall)
 	local f2 = love.physics.newFixture(egg.body, lowerBall)
 	local f3 = love.physics.newFixture(egg.body, midSection)
+	egg.body:setMass(10)
 	f1:setFriction(FRICTION)
 	f1:setRestitution(RESTITUTION)
 	f1:setUserData({ name = "f_eggUpperBall", entity = egg, egg = true })

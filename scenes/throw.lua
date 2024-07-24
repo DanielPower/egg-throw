@@ -5,8 +5,7 @@ local Floor = require("obj.floor")
 local Hand = require("obj.hand")
 local Egg = require("obj.egg")
 
-local Throw
-Throw = function()
+local Throw = function()
 	local distance = 0
 	local throw = Scene({
 		initialize = function(scene)
@@ -57,7 +56,8 @@ Throw = function()
 		end,
 		preMousepressed = function(scene, x, y, button)
 			if scene.context.stage == "done" then
-				GAME_STATE.scene = Throw()
+				GAME_STATE.money = GAME_STATE.money + distance
+				GAME_STATE.scene = require("scenes.store")()
 			end
 		end,
 		preUpdate = function(scene, dt)
