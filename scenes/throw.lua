@@ -4,6 +4,7 @@ local Camera = require("lib.camera")
 local Floor = require("obj.floor")
 local Hand = require("obj.hand")
 local Egg = require("obj.egg")
+local ObstacleManager = require("obj.obstacle_manager")
 
 local Throw = function()
 	local distance = 0
@@ -53,6 +54,7 @@ local Throw = function()
 			scene.createEntity(Floor)
 			scene.context.hand = scene.createEntity(Hand)
 			scene.context.egg = scene.createEntity(Egg, { x = 0, y = -100 })
+			scene.context.obstacle_manager = scene.createEntity(ObstacleManager)
 		end,
 		preMousepressed = function(scene, x, y, button)
 			if scene.context.stage == "done" then

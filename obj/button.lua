@@ -34,7 +34,6 @@ local Button = function(scene, opt)
 			and event.y >= button.y
 			and event.y <= button.y + height
 		then
-			print("clicked")
 			button.onClick(event)
 		end
 	end

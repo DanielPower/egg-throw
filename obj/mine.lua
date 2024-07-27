@@ -22,7 +22,6 @@ local Mine = function(scene, opt)
 		if explodeTimer then
 			explodeTimer = explodeTimer - dt
 			if explodeTimer <= 0 then
-				scene.context.egg.body:applyLinearImpulse(0, -500)
 				scene.destroyEntity(mine)
 			end
 		end
@@ -31,6 +30,9 @@ local Mine = function(scene, opt)
 	function mine:beginContact(otherFixture)
 		local otherFixtureUserData = otherFixture:getUserData()
 		if explodeTimer == nil and otherFixtureUserData and otherFixtureUserData.egg then
+			local vx, vy = scene.context.egg.body:getLinearVelocity()
+			scene.context.egg.body:setLinearVelocity(vx, -vy)
+			scene.context.egg.body:applyLinearImpulse(1000, -5000)
 			animation = explodeAnimation
 			explodeTimer = 0.2
 		end

@@ -8,7 +8,9 @@ local Camera = function(opt)
 
 	function camera:update(dt)
 		if camera.target then
-			camera:moveTo(camera.target())
+			local tx, ty = camera.target()
+			camera:moveTo(tx, ty)
+			camera.scale = 0.9 ^ (-ty / 100)
 		else
 			if love.keyboard.isDown("up") then
 				self:move(0, -100 * dt)
