@@ -33,6 +33,7 @@ local Mine = function(scene, opt)
 			local vx, vy = scene.context.egg.body:getLinearVelocity()
 			scene.context.egg.body:setLinearVelocity(vx, -vy)
 			scene.context.egg.body:applyLinearImpulse(1000, -5000)
+			scene.context.egg.body:applyAngularImpulse(1000)
 			animation = explodeAnimation
 			explodeTimer = 0.2
 		end

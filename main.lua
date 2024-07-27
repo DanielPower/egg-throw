@@ -26,6 +26,9 @@ function love.keypressed(key)
 	if key == "r" then
 		love.load()
 	end
+	if key == "f" then
+		love.window.setFullscreen(not love.window.getFullscreen())
+	end
 	if key == "s" then
 		GAME_STATE.scene.destroy()
 		GAME_STATE.scene = Store()

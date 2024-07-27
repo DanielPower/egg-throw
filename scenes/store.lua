@@ -7,7 +7,7 @@ local function strengthPrice()
 end
 
 local function minesPrice()
-	return math.floor((5 * 1.25 ^ GAME_STATE.mines_level))
+	return math.floor((5 * 1.05 ^ GAME_STATE.mines_level))
 end
 
 local Store = function()

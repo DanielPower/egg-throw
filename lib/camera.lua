@@ -10,7 +10,7 @@ local Camera = function(opt)
 		if camera.target then
 			local tx, ty = camera.target()
 			camera:moveTo(tx, ty)
-			camera.scale = 0.9 ^ (-ty / 100)
+			camera.scale = math.max(0.3, 0.9 ^ (-ty / 100))
 		else
 			if love.keyboard.isDown("up") then
 				self:move(0, -100 * dt)

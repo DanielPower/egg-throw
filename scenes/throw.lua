@@ -80,16 +80,16 @@ local Throw = function()
 			if scene.context.stage == "throw" and not scene.context.egg.body:isAwake() then
 				scene.context.stage = "done"
 			end
-			distance = math.floor(
-				(scene.context.egg.body:getX() - scene.context.camera:getViewportWidth() / 2) / 64
-			)
+			distance = math.floor((scene.context.egg.body:getX() - 320) / 64)
 		end,
 		preDraw = function(scene)
 			love.graphics.clear(0.53, 0.81, 0.92)
 			scene.context.camera:attach()
 		end,
 		postDraw = function(scene)
-			physics.debugDraw(scene.context.world)
+			if GAME_STATE.debug then
+				physics.debugDraw(scene.context.world)
+			end
 			scene.context.camera:detach()
 			love.graphics.setColor(1, 0, 0)
 			love.graphics.setFont(love.graphics.newFont(30))
