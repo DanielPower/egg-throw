@@ -14,8 +14,8 @@ local Store = function()
 	local store = Scene({
 		initialize = function(scene)
 			scene.context.buyStrengthButton = scene.createEntity(Button, {
-				x = love.graphics.getWidth() / 2 - 100,
-				y = love.graphics.getHeight() / 2 - 50,
+				x = GAME_WIDTH / 2 - 100,
+				y = GAME_HEIGHT / 2 - 50,
 				onClick = function()
 					if GAME_STATE.money < strengthPrice() then
 						return
@@ -25,8 +25,8 @@ local Store = function()
 				end,
 			})
 			scene.context.buyMinesButton = scene.createEntity(Button, {
-				x = love.graphics.getWidth() / 2 - 100,
-				y = love.graphics.getHeight() / 2 + 25,
+				x = GAME_WIDTH / 2 - 100,
+				y = GAME_HEIGHT / 2 + 25,
 				onClick = function()
 					if GAME_STATE.money < minesPrice() then
 						return
@@ -36,8 +36,8 @@ local Store = function()
 				end,
 			})
 			scene.createEntity(Button, {
-				x = love.graphics.getWidth() / 2 - 100,
-				y = love.graphics.getHeight() / 2 + 100,
+				x = GAME_WIDTH / 2 - 100,
+				y = GAME_HEIGHT / 2 + 100,
 				onClick = function()
 					GAME_STATE.scene = require("scenes.throw")()
 				end,
@@ -57,8 +57,8 @@ local Store = function()
 			love.graphics.setColor(0.5, 0.5, 0.5)
 			love.graphics.draw(
 				eggmartImage,
-				love.graphics.getWidth() / 2,
-				love.graphics.getHeight() / 2,
+				GAME_WIDTH / 2,
+				GAME_HEIGHT / 2,
 				0,
 				1,
 				1,

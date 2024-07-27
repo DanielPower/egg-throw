@@ -102,6 +102,7 @@ local Throw = function()
 					love.graphics.print("Click to continue", 10, 40)
 				end
 			end
+			love.graphics.setColor(1, 1, 1)
 		end,
 	})
 

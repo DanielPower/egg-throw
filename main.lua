@@ -2,6 +2,10 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 
 local Throw = require("scenes.throw")
 local Store = require("scenes.store")
+local canvas = love.graphics.newCanvas(1280, 720)
+
+GAME_WIDTH = 1280
+GAME_HEIGHT = 720
 
 function love.load()
 	love.physics.setMeter(64)
@@ -9,8 +13,8 @@ function love.load()
 		scene = nil,
 		pause = false,
 		debug = false,
-		hand_strength = 5,
-		mines_level = 1,
+		hand_strength = 3,
+		mines_level = 0,
 		money = 0,
 	}
 	GAME_STATE.scene = Throw()
@@ -39,7 +43,17 @@ function love.keypressed(key)
 	GAME_STATE.scene.keypressed(key)
 end
 
-function love.mousepressed(x, y, button)
+function love.mousepressed(windowX, windowY, button)
+	local window_width, window_height = love.graphics.getDimensions()
+	local window_aspect = window_width / window_height
+	local game_aspect = GAME_WIDTH / GAME_HEIGHT
+	local scale = window_aspect > game_aspect and window_height / GAME_HEIGHT
+		or window_width / GAME_WIDTH
+	local offsetX = (window_width - GAME_WIDTH * scale) / 2
+	local offsetY = (window_height - GAME_HEIGHT * scale) / 2
+	local x = (windowX - offsetX) / scale
+	local y = (windowY - offsetY) / scale
+
 	GAME_STATE.scene.mousepressed(x, y, button)
 end
 
@@ -61,6 +75,7 @@ function love.update(dt)
 end
 
 function love.draw()
+	love.graphics.setCanvas(canvas)
 	love.graphics.setColor(1, 1, 1, 1)
 	GAME_STATE.scene.draw()
 	GAME_STATE.scene.drawUI()
@@ -68,4 +83,15 @@ function love.draw()
 		love.graphics.setColor(1, 0, 0)
 		love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
 	end
+	love.graphics.setCanvas()
+
+	-- Draw the canvas to the screen maintaining aspect ratio
+	local window_width, window_height = love.graphics.getDimensions()
+	local window_aspect = window_width / window_height
+	local game_aspect = GAME_WIDTH / GAME_HEIGHT
+	local scale = window_aspect > game_aspect and window_height / GAME_HEIGHT
+		or window_width / GAME_WIDTH
+	local x = (window_width - GAME_WIDTH * scale) / 2
+	local y = (window_height - GAME_HEIGHT * scale) / 2
+	love.graphics.draw(canvas, x, y, 0, scale, scale)
 end

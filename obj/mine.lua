@@ -1,5 +1,4 @@
 local anim8 = require("lib/anim8")
-local inspect = require("lib/inspect")
 
 local bomb = love.graphics.newImage("assets/bomb/bomb.png")
 local bombGrid = anim8.newGrid(64, 64, bomb:getWidth(), bomb:getHeight())
@@ -41,7 +40,7 @@ local Mine = function(scene, opt)
 
 	function mine:draw()
 		local x, y = body:getPosition()
-		animation:draw(bomb, x, y, body:getAngle(), 1, 1, 32, 24)
+		animation:draw(bomb, x, y - 15, body:getAngle(), 2, 2, 32, 24)
 	end
 
 	function mine:destroy()

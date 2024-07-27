@@ -10,7 +10,7 @@ local Camera = function(opt)
 		if camera.target then
 			local tx, ty = camera.target()
 			camera:moveTo(tx, ty)
-			camera.scale = math.max(0.3, 0.9 ^ (-ty / 100))
+			camera.scale = math.max(0.5, 0.9 ^ (-ty / 100))
 		else
 			if love.keyboard.isDown("up") then
 				self:move(0, -100 * dt)
@@ -35,7 +35,7 @@ local Camera = function(opt)
 
 	function camera:attach()
 		love.graphics.push()
-		love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+		love.graphics.translate(GAME_WIDTH / 2, GAME_HEIGHT / 2)
 		love.graphics.scale(self.scale)
 		love.graphics.rotate(self.angle)
 		love.graphics.translate(-self.x, -self.y)
@@ -56,21 +56,21 @@ local Camera = function(opt)
 	end
 
 	function camera:toWorld(x, y)
-		return (x - love.graphics.getWidth() / 2) / self.scale + self.x,
-			(y - love.graphics.getHeight() / 2) / self.scale + self.y
+		return (x - GAME_WIDTH / 2) / self.scale + self.x,
+			(y - GAME_HEIGHT / 2) / self.scale + self.y
 	end
 
 	function camera:toScreen(x, y)
-		return (x - self.x) * self.scale + love.graphics.getWidth() / 2,
-			(y - self.y) * self.scale + love.graphics.getHeight() / 2
+		return (x - self.x) * self.scale + GAME_WIDTH / 2,
+			(y - self.y) * self.scale + GAME_HEIGHT / 2
 	end
 
 	function camera:getViewportWidth()
-		return love.graphics.getWidth() / self.scale
+		return GAME_WIDTH / self.scale
 	end
 
 	function camera:getViewportHeight()
-		return love.graphics.getHeight() / self.scale
+		return GAME_HEIGHT / self.scale
 	end
 
 	function camera:getMousePosition()

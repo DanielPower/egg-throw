@@ -5,7 +5,10 @@ local ObstacleManager = function(scene)
 	local nextMine = -1000
 
 	function obstacleManager:update(dt)
-		local screenEdge = scene.context.camera:toWorld(love.graphics.getWidth(), 0)
+		if GAME_STATE.mines_level == 0 then
+			return
+		end
+		local screenEdge = scene.context.camera:toWorld(GAME_WIDTH, 0)
 		local eggX = scene.context.egg.body:getPosition()
 		if eggX > nextMine then
 			scene.createEntity(Mine, { x = screenEdge + 100, y = -24 })
