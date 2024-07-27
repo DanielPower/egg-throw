@@ -10,7 +10,7 @@ function love.load()
 		pause = false,
 		debug = false,
 		hand_strength = 5,
-		mines_level = 10,
+		mines_level = 1,
 		money = 0,
 	}
 	GAME_STATE.scene = Throw()

@@ -32,7 +32,7 @@ local Mine = function(scene, opt)
 		if explodeTimer == nil and otherFixtureUserData and otherFixtureUserData.egg then
 			local vx, vy = scene.context.egg.body:getLinearVelocity()
 			scene.context.egg.body:setLinearVelocity(vx, -vy)
-			scene.context.egg.body:applyLinearImpulse(1000, -5000)
+			scene.context.egg.body:applyLinearImpulse(2000, -3000)
 			scene.context.egg.body:applyAngularImpulse(1000)
 			animation = explodeAnimation
 			explodeTimer = 0.2
