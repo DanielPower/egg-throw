@@ -16,9 +16,11 @@ local grass_names = {
 }
 
 quads.grass = {
+	xOffset = 1,
+	yOffset = 1,
 	width = 16,
 	height = 16,
-	padding = 1,
+	padding = 2,
 }
 for x = 1, 5 do
 	for y = 1, 3 do
